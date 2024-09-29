@@ -6,7 +6,6 @@ public class Product {
     private double price;
     private String description;
     private String category;
-    private String notice; // Add a notice field
 
     public Product(String name, double price, String description, String category) {
         this.id = UUID.randomUUID().toString();
@@ -14,16 +13,6 @@ public class Product {
         this.price = price;
         this.description = description;
         this.category = category;
-        this.notice = ""; // Initialize notice
-    }
-
-    // Getters and setters for notice
-    public String getNotice() {
-        return notice;
-    }
-
-    public void setNotice(String notice) {
-        this.notice = notice;
     }
 
     public String getID() {

@@ -69,13 +69,8 @@ public class WarehouseConsole {
         String description = scanner.nextLine();
         System.out.print("Enter Product Category: ");
         String category = scanner.nextLine();
-        
-        // Get Notice information
-        System.out.print("Enter Product Notice: ");
-        String notice = scanner.nextLine();
 
         Product product = new Product(name, price, description, category);
-        product.setNotice(notice); // Assuming you've added setNotice method to Product
         catalog.addProduct(product);
         System.out.println("Product added successfully!");
     }

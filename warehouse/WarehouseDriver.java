@@ -39,24 +39,5 @@ public class WarehouseDriver {
         } else {
             System.out.println("Client not found.");
         }
-
-        // Create a Catalog object
-        Catalog catalog = Catalog.getInstance();
-
-        // Create a few Product objects
-        Product product1 = new Product("Laptop", 999.99, "High-performance laptop", "Electronics");
-        Product product2 = new Product("Phone", 499.99, "Latest model smartphone", "Electronics");
-
-        // Add products to the catalog and generate notices
-        catalog.addProduct(product1);
-        catalog.addProduct(product2);
-
-        // Display all notices related to products
-        System.out.println("\nNotices:");
-        Iterator<Notice> noticeIterator = catalog.getNotices();
-        while (noticeIterator.hasNext()) {
-            Notice notice = noticeIterator.next();
-            System.out.println(notice);
-        }
     }
 }

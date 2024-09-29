@@ -5,11 +5,9 @@ import java.util.List;
 public class Catalog {
     private static Catalog catalog;
     private List<Product> products;
-    private List<Notice> notices; // List to store notices related to products
 
     private Catalog() {
         this.products = new ArrayList<>();
-        this.notices = new ArrayList<>(); // Initialize the list of notices
     }
 
     public static Catalog getInstance() {
@@ -20,19 +18,28 @@ public class Catalog {
     }
 
     public boolean addProduct(Product product) {
-        boolean added = products.add(product);
-        if (added) {
-            // Create a notice when a product is added
-            Notice notice = new Notice("Product added: " + product.getName(), product.getID());
-            notices.add(notice); // Add the notice to the list
-            System.out.println(notice); // Print the notice
-        }
-        return added;
+        return products.add(product);
     }
 
-    // Other methods remain unchanged...
+    public boolean removeProduct(String productID) {
+        for (Product product : products) {
+            if (product.getID().equals(productID)) {
+                return products.remove(product);
+            }
+        }
+        return false;
+    }
 
-    public Iterator<Notice> getNotices() {
-        return notices.iterator(); // Return an iterator for the notices
+    public Product searchProduct(String productID) {
+        for (Product product : products) {
+            if (product.getID().equals(productID)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public Iterator<Product> getAllProducts() {
+        return products.iterator();
     }
 }
