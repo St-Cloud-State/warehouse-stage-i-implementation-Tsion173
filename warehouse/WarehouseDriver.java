@@ -39,5 +39,13 @@ public class WarehouseDriver {
         } else {
             System.out.println("Client not found.");
         }
+
+        // Display notices
+        System.out.println("\nNotices:");
+        Iterator<Notice> noticeIterator = Catalog.getInstance().getNotices();  // Use getNotices() here
+        while (noticeIterator.hasNext()) {
+            Notice notice = noticeIterator.next();
+            System.out.println(notice.getMessage());
+        }
     }
 }

@@ -5,9 +5,11 @@ import java.util.List;
 public class Catalog {
     private static Catalog catalog;
     private List<Product> products;
+    private List<Notice> notices;  // List to store notices
 
     private Catalog() {
         this.products = new ArrayList<>();
+        this.notices = new ArrayList<>();  // Initialize the notices list
     }
 
     public static Catalog getInstance() {
@@ -18,7 +20,12 @@ public class Catalog {
     }
 
     public boolean addProduct(Product product) {
-        return products.add(product);
+        boolean added = products.add(product);
+        if (added) {
+            Notice notice = new Notice("Product added: " + product.getName(), product.getID());
+            notices.add(notice);
+        }
+        return added;
     }
 
     public boolean removeProduct(String productID) {
@@ -41,5 +48,10 @@ public class Catalog {
 
     public Iterator<Product> getAllProducts() {
         return products.iterator();
+    }
+
+    // Method to get an iterator for notices
+    public Iterator<Notice> getNotices() {
+        return notices.iterator();
     }
 }
