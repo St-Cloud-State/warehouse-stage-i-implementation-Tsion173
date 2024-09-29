@@ -1,7 +1,70 @@
 // Tsion 
 // UI code to link everything 
-
 import java.util.Scanner;
+
+public class WarehouseConsole {
+    private ClientList clientList;
+    private Scanner scanner;
+
+    public WarehouseConsole() {
+        clientList = new ClientList();
+        scanner = new Scanner(System.in);
+    }
+
+    public void manageClients() {
+        System.out.println("Manage Clients");
+        System.out.print("Enter Client Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter Client Address: ");
+        String address = scanner.nextLine();
+        System.out.print("Enter Client Phone: ");
+        String phone = scanner.nextLine();
+
+        // Create a new client instance
+        Client client = new Client(name, address, phone);
+        clientList.insertClient(client); // Insert client into the list
+
+        // Display success message and the generated Client ID
+        System.out.println("Client added successfully!");
+        System.out.println("Client ID: " + client.getID()); // Display the generated Client ID
+    }
+
+    public void showMainMenu() {
+        while (true) {
+            System.out.println("Warehouse Management System");
+            System.out.println("1. Manage Clients");
+            System.out.println("2. Manage Products");
+            System.out.println("3. Create Order");
+            System.out.println("4. View Products");
+            System.out.println("5. View Orders");
+            System.out.println("6. Exit");
+            System.out.print("Select an option: ");
+
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (option) {
+                case 1:
+                    manageClients();
+                    break;
+                // Add other cases here for other options
+                case 6:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        WarehouseConsole console = new WarehouseConsole();
+        console.showMainMenu();
+    }
+}
+
+
+/*import java.util.Scanner;
 import java.util.Iterator;
 
 public class WarehouseConsole {
@@ -127,3 +190,4 @@ public class WarehouseConsole {
         app.showMainMenu();
     }
 }
+*/
