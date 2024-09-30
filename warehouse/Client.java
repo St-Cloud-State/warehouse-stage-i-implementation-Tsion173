@@ -1,5 +1,6 @@
 //Nathan Nelson
 
+
 import java.util.UUID;
 
 public class Client {
@@ -33,28 +34,4 @@ public class Client {
         return phone;
     }
 }
-
-
-
-    /*
-    // Issue a product (adds to orders)
-    public boolean issueProduct(Product product) {
-        return myOrders.addOrder(product);  // Adds product to the Orders list
-    }
-
-    // Remove a product (removes from orders)
-    public boolean removeProduct(Product product) {
-        return myOrders.removeOrder(product);  // Removes product from the Orders list
-    }
-
-    // Get an iterator for the wishlist
-    public Iterator<Product> getWishlist() {
-        return myWishlist.getProducts();
-    }
-
-    // Get an iterator for the orders
-    public Iterator<Product> getOrders() {
-        return myOrders.getProducts();
-    }
-    */
 

@@ -1,5 +1,4 @@
 //Nathan Nelson
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,8 +10,13 @@ public class ClientList {
         this.clients = new ArrayList<>();
     }
 
-    public void insertClient(Client client) {
+    public boolean insertClient(Client client) {
+        // Check for duplicate client IDs before adding
+        if (search(client.getID()) != null) {
+            return false; // Prevent adding a duplicate client
+        }
         clients.add(client);
+        return true; // Return true if the client was added successfully
     }
 
     public Iterator<Client> getClients() {
@@ -27,4 +31,13 @@ public class ClientList {
         }
         return null;
     }
+
+    // Method to display all clients
+    public void viewClients() {
+        System.out.println("Clients:");
+        for (Client client : clients) {
+            System.out.println("ID: " + client.getID() + ", Name: " + client.getName());
+        }
+    }
 }
+

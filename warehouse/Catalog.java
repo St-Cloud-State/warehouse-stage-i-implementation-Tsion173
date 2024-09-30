@@ -1,3 +1,4 @@
+//Triston
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,10 +21,15 @@ public class Catalog {
     }
 
     public boolean addProduct(Product product) {
+        // Check for duplicate product IDs before adding
+        if (searchProduct(product.getID()) != null) {
+            return false; // Prevent adding a duplicate product
+        }
         boolean added = products.add(product);
         if (added) {
             Notice notice = new Notice("Product added: " + product.getName(), product.getID());
             notices.add(notice);
+            // Removed the print statement from here
         }
         return added;
     }
@@ -55,4 +61,5 @@ public class Catalog {
         return notices.iterator();
     }
 }
+
 
