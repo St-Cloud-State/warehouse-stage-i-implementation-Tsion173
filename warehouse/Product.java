@@ -3,64 +3,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
-    private String productId; // Unique product ID
-    private int quantity; // Available quantity
-    private double price; // Price of the product
-    private List<WaitlistEntry> waitlist = new ArrayList<>(); // List for waitlisted clients
+    private String productId;
+    private String name; // Add this field
+    private int quantity;
+    private double price;
+    private List<WaitlistEntry> waitlist = new ArrayList<>(); // Update to WaitlistEntry
 
-    // Inner class to manage waitlist entries
-    private class WaitlistEntry {
-        private String clientId; // ID of the client on the waitlist
-        private int quantity; // Quantity the client is waiting for
-
-        public WaitlistEntry(String clientId, int quantity) {
-            this.clientId = clientId;
-            this.quantity = quantity;
-        }
-
-        public String getClientId() {
-            return clientId;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-    }
-
-    // Constructor
-    public Product(String productId, int quantity, double price) {
+    public Product(String productId, String name, int quantity, double price) { // Update constructor
         this.productId = productId;
+        this.name = name; // Initialize name
         this.quantity = quantity;
         this.price = price;
     }
 
-    // Getter methods
-    public String getID() { 
-        return productId; 
+    public String getProductId() {
+        return productId;
     }
 
-    public int getQuantity() { 
-        return quantity; 
+    public String getName() { // Add this method
+        return name;
     }
 
-    public double getPrice() { 
-        return price; 
+    public int getQuantity() {
+        return quantity;
     }
 
-    public List<WaitlistEntry> getWaitlist() { 
-        return waitlist; 
+    public double getPrice() {
+        return price;
     }
 
-    // Method to decrease the quantity
-    public void decreaseQuantity(int quantity) { 
-        this.quantity -= quantity; 
+    public List<WaitlistEntry> getWaitlist() { // Update to WaitlistEntry
+        return waitlist;
     }
-
-    // Method to add a client to the waitlist
+    public void decreaseQuantity(int quantity) {
+        this.quantity -= quantity;
+    }
     public void addToWaitlist(String clientId, int quantity) {
-        waitlist.add(new WaitlistEntry(clientId, quantity));
+        waitlist.add(new WaitlistEntry(clientId, quantity)); // Update to WaitlistEntry
     }
 }
+
 
 
 

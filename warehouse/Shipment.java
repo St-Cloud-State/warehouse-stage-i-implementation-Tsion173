@@ -16,23 +16,23 @@ public class Shipment {
     // Process waitlist and generate invoices for filled orders
     public List<Invoice> processWaitlist(Product product, Warehouse warehouse) {
         List<Invoice> invoices = new ArrayList<>();
-        List<WaitlistItem> waitlist = product.getWaitlist();
-        
-        for (WaitlistItem item : waitlist) {
+        List<Product.WaitlistEntry> waitlist = product.getWaitlist(); // Updated to use WaitlistEntry
+
+        for (Product.WaitlistEntry entry : waitlist) { // Updated to use WaitlistEntry
             if (quantityReceived <= 0) break; // Stop if no stock left
 
-            int quantityToFill = Math.min(item.getQuantity(), quantityReceived);
+            int quantityToFill = Math.min(entry.getQuantity(), quantityReceived);
             quantityReceived -= quantityToFill;
-            item.decreaseQuantity(quantityToFill);
+            entry.decreaseQuantity(quantityToFill); // Assuming a method exists in WaitlistEntry to decrease quantity
 
             // Create invoice
-            Invoice invoice = new Invoice(item.getClientId(), productId, quantityToFill, product.getPrice());
+            Invoice invoice = new Invoice(entry.getClientId(), productId, quantityToFill, product.getPrice());
             invoices.add(invoice);
-            warehouse.addInvoice(item.getClientId(), invoice);
+            warehouse.addInvoice(entry.getClientId(), invoice);
         }
         
         // Remove fulfilled waitlist items
-        waitlist.removeIf(item -> item.getQuantity() == 0);
+        waitlist.removeIf(entry -> entry.getQuantity() == 0); // Updated to use WaitlistEntry
         return invoices;
     }
 }

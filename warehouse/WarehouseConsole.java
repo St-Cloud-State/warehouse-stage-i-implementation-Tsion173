@@ -1,8 +1,4 @@
-// Tsion 
-// UI code to link everything 
-
 import java.util.Scanner;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,9 +48,124 @@ public class WarehouseConsole {
                     break;
                 case 8:
                     System.out.println("Exiting...");
+                    scanner.close(); // Close scanner before exiting
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    // Method to manage clients
+    private void manageClients(Scanner scanner) {
+        System.out.println("Manage Clients");
+        System.out.println("1. Add Client");
+        System.out.println("2. View Clients");
+        System.out.println("3. Search Client");
+        System.out.print("Select an option: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter Client Name: ");
+                String name = scanner.nextLine();
+                System.out.print("Enter Client Address: ");
+                String address = scanner.nextLine();
+                System.out.print("Enter Client Phone: ");
+                String phone = scanner.nextLine();
+                Client newClient = new Client(name, address, phone);
+                clientList.addClient(newClient);
+                System.out.println("Client added successfully.");
+                break;
+            case 2:
+                System.out.println("Clients List:");
+                clientList.displayAllClients();
+                break;
+            case 3:
+                System.out.print("Enter Client ID to search: ");
+                String clientId = scanner.nextLine();
+                Client client = clientList.search(clientId);
+                if (client != null) {
+                    System.out.println("Client Found: " + client);
+                } else {
+                    System.out.println("Client not found.");
+                }
+                break;
+            default:
+                System.out.println("Invalid option. Returning to main menu.");
+        }
+    }
+
+    // Method to manage products
+    private void manageProducts(Scanner scanner) {
+        System.out.println("Manage Products");
+        System.out.println("1. Add Product");
+        System.out.println("2. View Products");
+        System.out.print("Select an option: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter Product Name: ");
+                String productName = scanner.nextLine();
+                System.out.print("Enter Product Quantity: ");
+                int quantity = scanner.nextInt();
+                System.out.print("Enter Product Price: ");
+                double price = scanner.nextDouble();
+                Product newProduct = new Product(Catalog.generateProductId(), productName, quantity, price);
+                catalog.addProduct(newProduct);
+                System.out.println("Product added successfully.");
+                break;
+            case 2:
+                System.out.println("Products List:");
+                catalog.displayAllProducts();
+                break;
+            default:
+                System.out.println("Invalid option. Returning to main menu.");
+        }
+    }
+
+    // Method to create an order
+    private void createOrder(Scanner scanner) {
+        System.out.println("Create Order");
+        System.out.print("Enter Client ID: ");
+        String clientID = scanner.nextLine();
+        Client client = clientList.search(clientID);
+        if (client != null) {
+            System.out.print("Enter Product ID: ");
+            String productID = scanner.nextLine();
+            Product product = catalog.searchProduct(productID);
+            if (product != null) {
+                System.out.print("Enter Quantity: ");
+                int orderQuantity = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+                
+                if (orderQuantity <= product.getQuantity()) {
+                    Order order = new Order(client, product, orderQuantity);
+                    orders.add(order);
+                    product.decreaseQuantity(orderQuantity); // Update product quantity
+                    System.out.println("Order created successfully.");
+                } else {
+                    System.out.println("Insufficient stock for Product ID: " + productID);
+                }
+            } else {
+                System.out.println("Product not found.");
+            }
+        } else {
+            System.out.println("Client not found.");
+        }
+    }
+
+    // Method to view orders
+    private void viewOrders() {
+        System.out.println("Orders List:");
+        if (orders.isEmpty()) {
+            System.out.println("No orders have been created yet.");
+        } else {
+            for (Order order : orders) {
+                System.out.println(order);
             }
         }
     }
@@ -122,9 +233,6 @@ public class WarehouseConsole {
         }
     }
 
-    // Other methods (manageClients, manageProducts, createOrder, viewOrders, displayNotices) remain the same
-    // ...
-    
     public static void main(String[] args) {
         WarehouseConsole app = new WarehouseConsole(); // Create a new instance of the application
         app.showMainMenu(); // Show the main menu to the user
