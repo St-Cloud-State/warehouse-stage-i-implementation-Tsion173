@@ -3,30 +3,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
-    private String productId;
-    private int quantity;
-    private double price;
-    private List<WaitlistItem> waitlist = new ArrayList<>();
+    private String productId; // Unique product ID
+    private int quantity; // Available quantity
+    private double price; // Price of the product
+    private List<WaitlistEntry> waitlist = new ArrayList<>(); // List for waitlisted clients
 
+    // Inner class to manage waitlist entries
+    private class WaitlistEntry {
+        private String clientId; // ID of the client on the waitlist
+        private int quantity; // Quantity the client is waiting for
+
+        public WaitlistEntry(String clientId, int quantity) {
+            this.clientId = clientId;
+            this.quantity = quantity;
+        }
+
+        public String getClientId() {
+            return clientId;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+    }
+
+    // Constructor
     public Product(String productId, int quantity, double price) {
         this.productId = productId;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public String getProductId() { return productId; }
-    public int getQuantity() { return quantity; }
-    public double getPrice() { return price; }
-    public List<WaitlistItem> getWaitlist() { return waitlist; }
+    // Getter methods
+    public String getID() { 
+        return productId; 
+    }
 
-    public void decreaseQuantity(int quantity) { this.quantity -= quantity; }
+    public int getQuantity() { 
+        return quantity; 
+    }
 
+    public double getPrice() { 
+        return price; 
+    }
+
+    public List<WaitlistEntry> getWaitlist() { 
+        return waitlist; 
+    }
+
+    // Method to decrease the quantity
+    public void decreaseQuantity(int quantity) { 
+        this.quantity -= quantity; 
+    }
+
+    // Method to add a client to the waitlist
     public void addToWaitlist(String clientId, int quantity) {
-        waitlist.add(new WaitlistItem(clientId, quantity));
+        waitlist.add(new WaitlistEntry(clientId, quantity));
     }
 }
-
-
 
 
 
