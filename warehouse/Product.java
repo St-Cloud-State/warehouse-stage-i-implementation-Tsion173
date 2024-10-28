@@ -1,5 +1,36 @@
 //Triston
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Product {
+    private String productId;
+    private int quantity;
+    private double price;
+    private List<WaitlistItem> waitlist = new ArrayList<>();
+
+    public Product(String productId, int quantity, double price) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public String getProductId() { return productId; }
+    public int getQuantity() { return quantity; }
+    public double getPrice() { return price; }
+    public List<WaitlistItem> getWaitlist() { return waitlist; }
+
+    public void decreaseQuantity(int quantity) { this.quantity -= quantity; }
+
+    public void addToWaitlist(String clientId, int quantity) {
+        waitlist.add(new WaitlistItem(clientId, quantity));
+    }
+}
+
+
+
+
+
+/*import java.util.UUID;
 
 public class Product {
     private String id;
@@ -74,4 +105,4 @@ public class Product {
         this.category = null;
         return true;
     }
-}
+}*/
