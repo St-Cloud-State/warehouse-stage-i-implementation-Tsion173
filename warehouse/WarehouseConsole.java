@@ -9,6 +9,138 @@ import java.util.List;
 public class WarehouseConsole {
     private ClientList clientList = new ClientList(); // List to manage clients
     private Catalog catalog = Catalog.getInstance(); // Singleton instance of the product catalog
+    private Warehouse warehouse = new Warehouse(); // Warehouse for managing inventory and orders
+    private List<Order> orders = new ArrayList<>(); // List to store orders
+
+    public void showMainMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Warehouse Management System");
+            System.out.println("1. Manage Clients");
+            System.out.println("2. Manage Products");
+            System.out.println("3. Create Order");
+            System.out.println("4. View Orders");
+            System.out.println("5. Record Payment");
+            System.out.println("6. Receive Shipment");
+            System.out.println("7. View Invoices");
+            System.out.println("8. Exit");
+            System.out.print("Select an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    manageClients(scanner);
+                    break;
+                case 2:
+                    manageProducts(scanner);
+                    break;
+                case 3:
+                    createOrder(scanner);
+                    break;
+                case 4:
+                    viewOrders();
+                    break;
+                case 5:
+                    recordPayment(scanner);
+                    break;
+                case 6:
+                    receiveShipment(scanner);
+                    break;
+                case 7:
+                    viewInvoices(scanner);
+                    break;
+                case 8:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    // Method to record payment from a client
+    private void recordPayment(Scanner scanner) {
+        System.out.println("Record Payment");
+        System.out.print("Enter Client ID: ");
+        String clientID = scanner.nextLine();
+        System.out.print("Enter Payment Amount: ");
+        double amount = scanner.nextDouble();
+        scanner.nextLine(); // Consume the newline character
+
+        Client client = clientList.search(clientID);
+        if (client != null) {
+            client.recordPayment(amount); // Adjust client’s balance
+            System.out.println("Payment recorded successfully for Client ID: " + clientID);
+        } else {
+            System.out.println("Client not found.");
+        }
+    }
+
+    // Method to receive a shipment
+    private void receiveShipment(Scanner scanner) {
+        System.out.println("Receive Shipment");
+        System.out.print("Enter Product ID: ");
+        String productID = scanner.nextLine();
+        System.out.print("Enter Quantity Received: ");
+        int quantity = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        Product product = catalog.searchProduct(productID);
+        if (product != null) {
+            Shipment shipment = new Shipment(productID, quantity); // Create shipment
+            List<Invoice> invoices = shipment.processWaitlist(product, warehouse); // Process waitlist
+
+            System.out.println("Shipment processed. Updated stock for Product ID: " + productID + " is " + product.getQuantity());
+            if (!invoices.isEmpty()) {
+                System.out.println("Invoices generated for waitlisted clients:");
+                for (Invoice invoice : invoices) {
+                    System.out.println(invoice);
+                }
+            } else {
+                System.out.println("No waitlisted items for this shipment.");
+            }
+        } else {
+            System.out.println("Product not found.");
+        }
+    }
+
+    // Method to view invoices for a specific client
+    private void viewInvoices(Scanner scanner) {
+        System.out.println("View Invoices");
+        System.out.print("Enter Client ID: ");
+        String clientID = scanner.nextLine();
+
+        List<Invoice> invoices = warehouse.getClientInvoices(clientID);
+        if (invoices != null && !invoices.isEmpty()) {
+            System.out.println("Invoices for Client ID " + clientID + ":");
+            for (Invoice invoice : invoices) {
+                System.out.println(invoice);
+            }
+        } else {
+            System.out.println("No invoices found for this client.");
+        }
+    }
+
+    // Other methods (manageClients, manageProducts, createOrder, viewOrders, displayNotices) remain the same
+    // ...
+    
+    public static void main(String[] args) {
+        WarehouseConsole app = new WarehouseConsole(); // Create a new instance of the application
+        app.showMainMenu(); // Show the main menu to the user
+    }
+}
+
+
+
+/*import java.util.Scanner;
+import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
+
+public class WarehouseConsole {
+    private ClientList clientList = new ClientList(); // List to manage clients
+    private Catalog catalog = Catalog.getInstance(); // Singleton instance of the product catalog
     private List<Order> orders = new ArrayList<>(); // List to store orders
 
     public void showMainMenu() {
@@ -145,5 +277,5 @@ public class WarehouseConsole {
         WarehouseConsole app = new WarehouseConsole(); // Create a new instance of the application
         app.showMainMenu(); // Show the main menu to the user
     }
-}
+}*/
 
